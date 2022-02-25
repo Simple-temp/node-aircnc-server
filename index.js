@@ -19,6 +19,7 @@ client.connect(err => {
 
   const collection = client.db("aircnc").collection("aircncCollection");
   const guestCollection = client.db("aircnc").collection("guests");
+  const smsCollection = client.db("aircnc").collection("sms");
 
   app.post("/postitem",(req,res)=>{
     const file = req.files.file;
@@ -76,7 +77,14 @@ client.connect(err => {
     })
   })
 
-  
+  app.post("/postsms",(req,res)=>{
+    const sms = req.body
+    console.log(sms)
+    smsCollection.insertOne(sms)
+    .then(function(result){
+      res.send(result)
+    })
+  })
   
   console.log("db connected")
 });
